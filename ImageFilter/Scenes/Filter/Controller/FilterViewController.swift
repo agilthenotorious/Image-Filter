@@ -25,7 +25,7 @@ class FilterViewController: UIViewController {
     }
 }
 
-extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
+extension FilterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.providerInfoArray?.count ?? 0
     }
@@ -39,6 +39,12 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configureCell(provider: provider.provider, isOn: provider.isOn)
         }
         return cell
+    }
+}
+
+extension FilterViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 

@@ -137,13 +137,17 @@ extension ImagesViewController: ProviderDelegate {
             self.providers[index].isOn = isOn
             self.tableView.reloadData()
         }
-        self.getDataFromServer(about: "laptop")
     }
 }
 
 extension ImagesViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard text.count >= 5 else { return }
+        guard text.count >= 5 else {
+            self.title = "Images"
+            return
+        }
+        
+        self.getDataFromServer(about: searchText)
     }
 }
