@@ -7,23 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0036C0F22528647B005B2693 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C0F12528647B005B2693 /* Provider.swift */; };
+		0036C0FA25286D7B005B2693 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C0F925286D7B005B2693 /* FilterTableViewCell.swift */; };
+		0036C0FE25286D97005B2693 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C0FD25286D97005B2693 /* FilterViewController.swift */; };
+		0036C102252A4900005B2693 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C101252A4900005B2693 /* Protocols.swift */; };
 		003AEE0E2527914D00EA59C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003AEE0D2527914D00EA59C2 /* AppDelegate.swift */; };
 		003AEE102527914D00EA59C2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003AEE0F2527914D00EA59C2 /* SceneDelegate.swift */; };
-		003AEE122527914D00EA59C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003AEE112527914D00EA59C2 /* ViewController.swift */; };
+		003AEE122527914D00EA59C2 /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003AEE112527914D00EA59C2 /* ImagesViewController.swift */; };
 		003AEE152527914D00EA59C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 003AEE132527914D00EA59C2 /* Main.storyboard */; };
 		003AEE172527915100EA59C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003AEE162527915100EA59C2 /* Assets.xcassets */; };
 		003AEE1A2527915100EA59C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 003AEE182527915100EA59C2 /* LaunchScreen.storyboard */; };
+		003AEE292527962900EA59C2 /* ImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003AEE282527962900EA59C2 /* ImagesTableViewCell.swift */; };
+		003AEE3225279FFB00EA59C2 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003AEE3125279FFB00EA59C2 /* ApiResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0036C0F12528647B005B2693 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		0036C0F925286D7B005B2693 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilterTableViewCell.swift; path = ImageFilter/Scenes/Filter/View/FilterTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		0036C0FD25286D97005B2693 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		0036C101252A4900005B2693 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		003AEE0A2527914D00EA59C2 /* ImageFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		003AEE0D2527914D00EA59C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		003AEE0F2527914D00EA59C2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		003AEE112527914D00EA59C2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		003AEE112527914D00EA59C2 /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		003AEE142527914D00EA59C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		003AEE162527915100EA59C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		003AEE192527915100EA59C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		003AEE1B2527915100EA59C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		003AEE282527962900EA59C2 /* ImagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesTableViewCell.swift; sourceTree = "<group>"; };
+		003AEE3125279FFB00EA59C2 /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,10 +49,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0036C0F025286453005B2693 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				0036C0F825286D34005B2693 /* Model */,
+				0036C0F725286D2E005B2693 /* View */,
+				0036C0F625286D28005B2693 /* Controller */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		0036C0F625286D28005B2693 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0036C0FD25286D97005B2693 /* FilterViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0036C0F725286D2E005B2693 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0036C0F925286D7B005B2693 /* FilterTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0036C0F825286D34005B2693 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0036C101252A4900005B2693 /* Protocols.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0036C106252AEA59005B2693 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				003AEE0D2527914D00EA59C2 /* AppDelegate.swift */,
+				003AEE0F2527914D00EA59C2 /* SceneDelegate.swift */,
+				003AEE1B2527915100EA59C2 /* Info.plist */,
+			);
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		0036C107252AEA7D005B2693 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				003AEE132527914D00EA59C2 /* Main.storyboard */,
+				003AEE182527915100EA59C2 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		003AEE012527914D00EA59C2 = {
 			isa = PBXGroup;
 			children = (
 				003AEE0C2527914D00EA59C2 /* ImageFilter */,
+				003AEE162527915100EA59C2 /* Assets.xcassets */,
 				003AEE0B2527914D00EA59C2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,15 +122,55 @@
 		003AEE0C2527914D00EA59C2 /* ImageFilter */ = {
 			isa = PBXGroup;
 			children = (
-				003AEE0D2527914D00EA59C2 /* AppDelegate.swift */,
-				003AEE0F2527914D00EA59C2 /* SceneDelegate.swift */,
-				003AEE112527914D00EA59C2 /* ViewController.swift */,
-				003AEE132527914D00EA59C2 /* Main.storyboard */,
-				003AEE162527915100EA59C2 /* Assets.xcassets */,
-				003AEE182527915100EA59C2 /* LaunchScreen.storyboard */,
-				003AEE1B2527915100EA59C2 /* Info.plist */,
+				0036C107252AEA7D005B2693 /* Storyboards */,
+				003AEE26252795F500EA59C2 /* Scenes */,
+				0036C106252AEA59005B2693 /* Support Files */,
 			);
 			path = ImageFilter;
+			sourceTree = "<group>";
+		};
+		003AEE26252795F500EA59C2 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				003AEE272527960000EA59C2 /* Images */,
+				0036C0F025286453005B2693 /* Filter */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		003AEE272527960000EA59C2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				003AEE2F2527963F00EA59C2 /* Model */,
+				003AEE2E2527963400EA59C2 /* Views */,
+				003AEE2C2527962D00EA59C2 /* Controller */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		003AEE2C2527962D00EA59C2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				003AEE112527914D00EA59C2 /* ImagesViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		003AEE2E2527963400EA59C2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				003AEE282527962900EA59C2 /* ImagesTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		003AEE2F2527963F00EA59C2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				003AEE3125279FFB00EA59C2 /* ApiResponse.swift */,
+				0036C0F12528647B005B2693 /* Provider.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,6 +183,7 @@
 				003AEE062527914D00EA59C2 /* Sources */,
 				003AEE072527914D00EA59C2 /* Frameworks */,
 				003AEE082527914D00EA59C2 /* Resources */,
+				003AEE24252791FD00EA59C2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -132,13 +239,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		003AEE24252791FD00EA59C2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"error: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		003AEE062527914D00EA59C2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				003AEE122527914D00EA59C2 /* ViewController.swift in Sources */,
+				003AEE122527914D00EA59C2 /* ImagesViewController.swift in Sources */,
+				003AEE292527962900EA59C2 /* ImagesTableViewCell.swift in Sources */,
+				0036C0FE25286D97005B2693 /* FilterViewController.swift in Sources */,
+				0036C102252A4900005B2693 /* Protocols.swift in Sources */,
 				003AEE0E2527914D00EA59C2 /* AppDelegate.swift in Sources */,
+				003AEE3225279FFB00EA59C2 /* ApiResponse.swift in Sources */,
+				0036C0F22528647B005B2693 /* Provider.swift in Sources */,
+				0036C0FA25286D7B005B2693 /* FilterTableViewCell.swift in Sources */,
 				003AEE102527914D00EA59C2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,7 +349,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -271,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -288,7 +421,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VX327H4378;
-				INFOPLIST_FILE = ImageFilter/Info.plist;
+				INFOPLIST_FILE = "ImageFilter/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,7 +440,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VX327H4378;
-				INFOPLIST_FILE = ImageFilter/Info.plist;
+				INFOPLIST_FILE = "ImageFilter/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
