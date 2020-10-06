@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol ProviderDelegate: class {
+protocol ProviderProtocol: AnyObject {
     func updateProviders(provider: Provider, isOn: Bool)
 }
 
-protocol SwitchDelegate: class {
+protocol SwitchProtocol: AnyObject {
     func updateSwitches(provider: Provider, isOn: Bool) -> Bool
 }
