@@ -15,8 +15,8 @@ class FilterTableViewCell: UITableViewCell {
     static let identifier = "FilterTableViewCell"
     var cellProvider: Provider?
     
-    weak var providerDelegate: ProviderDelegate?
-    weak var switchDelegate: SwitchDelegate?
+    weak var providerDelegate: ProviderProtocol?
+    weak var switchDelegate: SwitchProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +28,10 @@ class FilterTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configureCell(provider: Provider, isOn: Bool) {
+    func configureCell(provider: Provider) {
         self.cellProvider = provider
         self.providerNameLabel.text = provider.name
-        self.switchButton.isOn = isOn
+        self.switchButton.isOn = provider.isOn
     }
 
     @objc func switchTurned() {
@@ -41,7 +41,7 @@ class FilterTableViewCell: UITableViewCell {
             if shouldPermitToSwitch {
                 self.providerDelegate?.updateProviders(provider: provider, isOn: self.switchButton.isOn)
             } else {
-                self.switchButton.isOn = !self.switchButton.isOn
+                self.switchButton.isOn.toggle()
             }
         }
     }

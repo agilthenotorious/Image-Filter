@@ -13,44 +13,48 @@ class FilterViewController: UIViewController {
         didSet {
             self.tableView.delegate = self
             self.tableView.dataSource = self
+            self.tableView.tableFooterView = UIView()
+            self.tableView.allowsSelection = false
         }
     }
     
-    var providerInfoArray: [(provider: Provider, isOn: Bool)]?
-    weak var delegate: ProviderDelegate?
+    var providers: [Provider]?
+    weak var delegate: ProviderProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.tableFooterView = UIView()
+        self.title = "Filter"
+    }
+    
+    func showAlert() {
+        let alertController = UIAlertController(title: "😔", message: "Please keep at least one filter on", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .cancel)
+        alertController.addAction(alertAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
-extension FilterViewController: UITableViewDataSource {
+extension FilterViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.providerInfoArray?.count ?? 0
+        return self.providers?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FilterTableViewCell.identifier, for: indexPath) as? FilterTableViewCell else { fatalError("Cell cannot be dequeued") }
         
-        if let provider = self.providerInfoArray?[indexPath.row] {
+        if let provider = self.providers?[indexPath.row] {
             cell.providerDelegate = self.delegate
             cell.switchDelegate = self
-            cell.configureCell(provider: provider.provider, isOn: provider.isOn)
+            cell.configureCell(provider: provider)
         }
         return cell
     }
 }
 
-extension FilterViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tableView.deselectRow(at: indexPath, animated: false)
-    }
-}
-
-extension FilterViewController: SwitchDelegate {
+extension FilterViewController: SwitchProtocol {
     func updateSwitches(provider: Provider, isOn: Bool) -> Bool {
-        guard let providersArray = self.providerInfoArray else { return true }
+        guard let providersArray = self.providers else { return true }
         
         var numOfSwitchesOn = 0
         providersArray.forEach { providerInstance in
@@ -60,16 +64,9 @@ extension FilterViewController: SwitchDelegate {
             self.showAlert()
             return false
         }
-        for (index, providerInstance) in providersArray.enumerated() where providerInstance.provider.name == provider.name {
-            self.providerInfoArray?[index].isOn = isOn
+        for (index, providerInstance) in providersArray.enumerated() where providerInstance == provider {
+            self.providers?[index].isOn = isOn
         }
         return true
-    }
-    
-    func showAlert() {
-        let alertController = UIAlertController(title: "😔", message: "Please keep at least one filter on", preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "OK", style: .cancel)
-        alertController.addAction(alertAction)
-        self.present(alertController, animated: true, completion: nil)
     }
 }
