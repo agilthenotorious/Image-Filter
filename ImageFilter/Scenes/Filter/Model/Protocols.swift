@@ -14,3 +14,7 @@ protocol ProviderProtocol: AnyObject {
 protocol SwitchProtocol: AnyObject {
     func updateSwitches(provider: Provider, isOn: Bool) -> Bool
 }
+
+protocol FilterProtocol: AnyObject {
+    func updateFilters(with filter: ImageFilterType)
+}

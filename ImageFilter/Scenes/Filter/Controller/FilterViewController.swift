@@ -14,12 +14,16 @@ class FilterViewController: UIViewController {
             self.tableView.delegate = self
             self.tableView.dataSource = self
             self.tableView.tableFooterView = UIView()
-            self.tableView.allowsSelection = false
         }
     }
     
     var providers: [Provider]?
+    var filterTypes: [ImageFilterType] = [.original, .blackWhite, .sepia, .bloom]
+    var selectedFilterType: ImageFilterType?
+    var sections: [String] = ["Providers", "Filters"]
+    
     weak var delegate: ProviderProtocol?
+    weak var filterDelegate: FilterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,25 +38,75 @@ class FilterViewController: UIViewController {
     }
 }
 
-extension FilterViewController: UITableViewDataSource, UITableViewDelegate {
+extension FilterViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        self.sections[section]
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.providers?.count ?? 0
+        if sections[section] == "Providers" {
+            return self.providers?.count ?? 0
+        } else if sections[section] == "Filters" {
+            return self.filterTypes.count
+        } else { return 0 }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FilterTableViewCell.identifier, for: indexPath) as? FilterTableViewCell else { fatalError("Cell cannot be dequeued") }
+        switch sections[indexPath.section] {
         
-        if let provider = self.providers?[indexPath.row] {
-            cell.providerDelegate = self.delegate
-            cell.switchDelegate = self
-            cell.configureCell(provider: provider)
+        case sections[0]:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProviderTableViewCell.identifier,
+                                                           for: indexPath) as? ProviderTableViewCell
+            else { fatalError("Provider cell cannot be dequeued") }
+            
+            if let provider = self.providers?[indexPath.row] {
+                cell.providerDelegate = self.delegate
+                cell.switchDelegate = self
+                cell.configureCell(provider: provider)
+            }
+            cell.selectionStyle = .none
+            return cell
+            
+        case sections[1]:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageFilterTableViewCell.identifier, for: indexPath) as? ImageFilterTableViewCell
+            else { fatalError("Filter cell cannot be dequeued") }
+            
+            cell.configureLabel(typeName: filterTypes[indexPath.row].rawValue)
+            cell.selectionStyle = .default
+            cell.accessoryType = .none
+            
+            if self.selectedFilterType != nil && self.selectedFilterType == self.filterTypes[indexPath.row] {
+                cell.accessoryType = .checkmark
+            }
+            return cell
+            
+        default:
+            fatalError("No cell can be deuqeued!")
         }
-        return cell
+    }
+}
+
+extension FilterViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section == 1 else { return }
+        
+        self.selectedFilterType = self.filterTypes[indexPath.row]
+        if let selectedFilter = self.selectedFilterType {
+            self.filterDelegate?.updateFilters(with: selectedFilter)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.tableView.reloadData()
     }
 }
 
 extension FilterViewController: SwitchProtocol {
+    
     func updateSwitches(provider: Provider, isOn: Bool) -> Bool {
         guard let providersArray = self.providers else { return true }
         
@@ -60,7 +114,7 @@ extension FilterViewController: SwitchProtocol {
         providersArray.forEach { providerInstance in
             if providerInstance.isOn { numOfSwitchesOn += 1 }
         }
-        if !isOn && numOfSwitchesOn < 2 {
+        if (!isOn) && (numOfSwitchesOn < 2) {
             self.showAlert()
             return false
         }

@@ -4,7 +4,7 @@
 //
 //  Created by Agil Madinali on 10/2/20.
 //
-
+/*
 import Foundation
 
 struct ApiResponse: Decodable {
@@ -28,3 +28,4 @@ struct ImageInfo: Decodable {
         case site
     }
 }
+*/

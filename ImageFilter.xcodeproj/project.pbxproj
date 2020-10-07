@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00120B3F252D9C9A00C67DEB /* ImageFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00120B3E252D9C9A00C67DEB /* ImageFilterType.swift */; };
+		00120B43252DA53F00C67DEB /* ImageFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00120B42252DA53F00C67DEB /* ImageFilterTableViewCell.swift */; };
+		00120B46252DB82800C67DEB /* CIFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00120B45252DB82800C67DEB /* CIFilterType.swift */; };
 		0036C0F22528647B005B2693 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C0F12528647B005B2693 /* Provider.swift */; };
-		0036C0FA25286D7B005B2693 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C0F925286D7B005B2693 /* FilterTableViewCell.swift */; };
+		0036C0FA25286D7B005B2693 /* ProviderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C0F925286D7B005B2693 /* ProviderTableViewCell.swift */; };
 		0036C0FE25286D97005B2693 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C0FD25286D97005B2693 /* FilterViewController.swift */; };
 		0036C102252A4900005B2693 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036C101252A4900005B2693 /* Protocols.swift */; };
 		003AEE0E2527914D00EA59C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003AEE0D2527914D00EA59C2 /* AppDelegate.swift */; };
@@ -25,8 +28,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00120B3E252D9C9A00C67DEB /* ImageFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterType.swift; sourceTree = "<group>"; };
+		00120B42252DA53F00C67DEB /* ImageFilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterTableViewCell.swift; sourceTree = "<group>"; };
+		00120B45252DB82800C67DEB /* CIFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIFilterType.swift; sourceTree = "<group>"; };
 		0036C0F12528647B005B2693 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
-		0036C0F925286D7B005B2693 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilterTableViewCell.swift; path = ImageFilter/Scenes/Filter/View/FilterTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		0036C0F925286D7B005B2693 /* ProviderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProviderTableViewCell.swift; path = ImageFilter/Scenes/Filter/View/ProviderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		0036C0FD25286D97005B2693 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		0036C101252A4900005B2693 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		003AEE0A2527914D00EA59C2 /* ImageFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +82,8 @@
 		0036C0F725286D2E005B2693 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0036C0F925286D7B005B2693 /* FilterTableViewCell.swift */,
+				0036C0F925286D7B005B2693 /* ProviderTableViewCell.swift */,
+				00120B42252DA53F00C67DEB /* ImageFilterTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -85,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				0036C101252A4900005B2693 /* Protocols.swift */,
+				00120B3E252D9C9A00C67DEB /* ImageFilterType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -178,6 +186,7 @@
 				004D8FFC252C351000EA402A /* Sections.swift */,
 				004D8FFF252C38A400EA402A /* NetworkManager.swift */,
 				004D9002252C5BCA00EA402A /* ApiRequestType.swift */,
+				00120B45252DB82800C67DEB /* CIFilterType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -279,11 +288,14 @@
 				0036C102252A4900005B2693 /* Protocols.swift in Sources */,
 				004D9003252C5BCA00EA402A /* ApiRequestType.swift in Sources */,
 				004D9000252C38A400EA402A /* NetworkManager.swift in Sources */,
+				00120B46252DB82800C67DEB /* CIFilterType.swift in Sources */,
 				003AEE0E2527914D00EA59C2 /* AppDelegate.swift in Sources */,
 				004D8FFD252C351000EA402A /* Sections.swift in Sources */,
 				003AEE3225279FFB00EA59C2 /* ApiResponse.swift in Sources */,
+				00120B43252DA53F00C67DEB /* ImageFilterTableViewCell.swift in Sources */,
+				00120B3F252D9C9A00C67DEB /* ImageFilterType.swift in Sources */,
 				0036C0F22528647B005B2693 /* Provider.swift in Sources */,
-				0036C0FA25286D7B005B2693 /* FilterTableViewCell.swift in Sources */,
+				0036C0FA25286D7B005B2693 /* ProviderTableViewCell.swift in Sources */,
 				003AEE102527914D00EA59C2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

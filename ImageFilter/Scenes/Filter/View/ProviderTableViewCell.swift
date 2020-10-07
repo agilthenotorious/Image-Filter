@@ -1,5 +1,5 @@
 //
-//  FilterTableViewCell.swift
+//  ProviderTableViewCell.swift
 //  ImageFilter
 //
 //  Created by Agil Madinali on 10/3/20.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-class FilterTableViewCell: UITableViewCell {
+class ProviderTableViewCell: UITableViewCell {
 
     @IBOutlet weak var switchButton: UISwitch!
     @IBOutlet weak var providerNameLabel: UILabel!
     
-    static let identifier = "FilterTableViewCell"
+    static let identifier = "ProviderTableViewCell"
     var cellProvider: Provider?
     
     weak var providerDelegate: ProviderProtocol?

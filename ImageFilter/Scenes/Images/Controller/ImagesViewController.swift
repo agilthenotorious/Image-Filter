@@ -27,6 +27,7 @@ class ImagesViewController: UIViewController {
             return sectionDataSourceStored
         }
     }
+    var selectedFilter: ImageFilterType = .original
     
     private let concurrentQueue = DispatchQueue(label: "my.concurrent.queue", attributes: .concurrent)
     private var searchWorkItem: DispatchWorkItem?
@@ -57,11 +58,9 @@ class ImagesViewController: UIViewController {
         let pexels = Provider(name: "Pexels", url: Pexels.url, parameters: Pexels.parameters, headers: Pexels.headers)
         let pixabay = Provider(name: "Pixabay", url: Pixabay.url, parameters: Pixabay.parameters, headers: nil)
         
-        let splashSection = Sections(provider: splash, dataSource: [])
-        let pexelSection = Sections(provider: pexels, dataSource: [])
-        let pixaBaySection = Sections(provider: pixabay, dataSource: [])
-        
-        self.sectionDataSourceStored = [splashSection, pixaBaySection, pexelSection]
+        self.sectionDataSourceStored = [Sections(provider: splash, dataSource: []),
+                                        Sections(provider: pexels, dataSource: []),
+                                        Sections(provider: pixabay, dataSource: [])]
     }
     
     func setupKeyboardHandlers() {
@@ -71,6 +70,18 @@ class ImagesViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         self.view.endEditing(true)
+    }
+    
+    func updateParameter(with text: String, _ dict: [String: String]) -> [String: String] {
+        
+        var parameters = dict
+        
+        if dict["query"] != nil {
+            parameters["query"] = text
+        } else if parameters["q"] != nil {
+            parameters["q"] = text
+        }
+        return parameters
     }
     
     func updateSection(provider: Provider, dictionary: Any?) -> [ImageProtocol] {
@@ -105,18 +116,20 @@ class ImagesViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let filterVC = segue.destination as? FilterViewController else { return }
-            
+        
         var providers = [Provider]()
         self.sectionDataSource.forEach { section in
             providers.append(section.provider)
         }
-        
-        filterVC.delegate = self
         filterVC.providers = providers
+        filterVC.selectedFilterType = self.selectedFilter
+        filterVC.delegate = self
+        filterVC.filterDelegate = self
+        
     }
 }
 
-extension ImagesViewController: UITableViewDataSource {
+extension ImagesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.sectionDataSource.filter { $0.provider.isOn }.count
@@ -139,16 +152,9 @@ extension ImagesViewController: UITableViewDataSource {
         
         let displaySections = self.sectionDataSource.filter { $0.provider.isOn }
         let url = displaySections[indexPath.section].dataSource[indexPath.row].imageUrl ?? ""
-        cell.configureCell(using: url)
+        cell.configureCell(using: url, filter: self.selectedFilter)
 
         return cell
-    }
-}
-
-extension ImagesViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -158,6 +164,14 @@ extension ImagesViewController: ProviderProtocol {
         for (index, section) in self.sectionDataSource.enumerated() where section.provider == provider {
             self.sectionDataSourceStored[index].provider.isOn = isOn
         }
+        self.tableView.reloadData()
+    }
+}
+
+extension ImagesViewController: FilterProtocol {
+    
+    func updateFilters(with filter: ImageFilterType) {
+        self.selectedFilter = filter
         self.tableView.reloadData()
     }
 }
@@ -181,19 +195,13 @@ extension ImagesViewController: UISearchBarDelegate {
             let providerGroup = DispatchGroup()
             
             for (index, section) in self.sectionDataSource.enumerated() {
-                
-                if section.provider.parameters["query"] != nil {
-                    self.sectionDataSourceStored[index].provider.parameters["query"] = text
-                } else if section.provider.parameters["q"] != nil {
-                    self.sectionDataSourceStored[index].provider.parameters["q"] = text
-                }
-                
+                let parameters = self.updateParameter(with: text, section.provider.parameters)
                 providerGroup.enter()
                 NetworkManager.shared.request(urlString: section.provider.url, headers: section.provider.headers,
-                                              parameters: section.provider.parameters) { [section] dictionary in
+                                              parameters: parameters) { [section] dictionary in
                     self.concurrentQueue.sync(flags: .barrier) {
-                        self.sectionDataSourceStored[index].dataSource = self.updateSection(provider: section.provider,
-                                                                                       dictionary: dictionary)
+                        self.sectionDataSourceStored[index].dataSource =
+                            self.updateSection(provider: section.provider, dictionary: dictionary)
                         providerGroup.leave()
                     }
                 }
