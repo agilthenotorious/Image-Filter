@@ -21,6 +21,11 @@ class ImagesViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var warningLabel: UILabel!
     
+    var providersArray: [Provider] = [
+            Provider(name: "Splash", url: Splash.url, parameters: Splash.parameters, headers: nil),
+            Provider(name: "Pexels", url: Pexels.url, parameters: Pexels.parameters, headers: Pexels.headers),
+            Provider(name: "Pixabay", url: Pixabay.url, parameters: Pixabay.parameters, headers: nil)
+            ]
     var sectionDataSourceStored = [Sections]()
     var sectionDataSource: [Sections] {
         concurrentQueue.sync {
@@ -36,8 +41,6 @@ class ImagesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.setupProviders()
         self.setupUI()
     }
     
@@ -53,16 +56,6 @@ class ImagesViewController: UIViewController {
         self.tableView.reloadData()
     }
     
-    func setupProviders() {
-        let splash = Provider(name: "Splash", url: Splash.url, parameters: Splash.parameters, headers: nil)
-        let pexels = Provider(name: "Pexels", url: Pexels.url, parameters: Pexels.parameters, headers: Pexels.headers)
-        let pixabay = Provider(name: "Pixabay", url: Pixabay.url, parameters: Pixabay.parameters, headers: nil)
-        
-        self.sectionDataSourceStored = [Sections(provider: splash, dataSource: []),
-                                        Sections(provider: pexels, dataSource: []),
-                                        Sections(provider: pixabay, dataSource: [])]
-    }
-    
     func setupKeyboardHandlers() {
         let dismiss = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         self.view.addGestureRecognizer(dismiss)
@@ -73,7 +66,6 @@ class ImagesViewController: UIViewController {
     }
     
     func updateParameter(with text: String, _ dict: [String: String]) -> [String: String] {
-        
         var parameters = dict
         
         if dict["query"] != nil {
@@ -84,34 +76,58 @@ class ImagesViewController: UIViewController {
         return parameters
     }
     
-    func updateSection(provider: Provider, dictionary: Any?) -> [ImageProtocol] {
-        
-        guard let dictionary = dictionary as? [String: Any] else { return [] }
+    func updateSection(provider: Provider, dictionary: Any?) {
+        guard let dictionary = dictionary as? [String: Any] else { return }
         var newSection: [ImageProtocol] = []
         
         switch provider.name {
         case Splash.name:
-            guard let arrayItems = dictionary["images"] as? [[String: Any]], !arrayItems.isEmpty else { return [] }
+            guard let arrayItems = dictionary["images"] as? [[String: Any]], !arrayItems.isEmpty else {
+                self.removeSection(provider: provider, name: Splash.name)
+                return
+            }
             arrayItems.forEach { dictionary in
                 newSection.append(SplashImageInfo(dict: dictionary))
             }
+            self.changeSectionValue(provider: provider, name: Splash.name, newSection: newSection)
             
         case Pexels.name:
-            guard let arrayItems = dictionary["photos"] as? [[String: Any]], !arrayItems.isEmpty else { return [] }
+            guard let arrayItems = dictionary["photos"] as? [[String: Any]], !arrayItems.isEmpty else {
+                self.removeSection(provider: provider, name: Pexels.name)
+                return
+            }
             arrayItems.forEach { dictionary in
                 newSection.append(PexelsImageInfo(dict: dictionary))
             }
+            self.changeSectionValue(provider: provider, name: Pexels.name, newSection: newSection)
             
         case Pixabay.name:
-            guard let arrayItems = dictionary["hits"] as? [[String: Any]], !arrayItems.isEmpty else { return [] }
+            guard let arrayItems = dictionary["hits"] as? [[String: Any]], !arrayItems.isEmpty else {
+                self.removeSection(provider: provider, name: Pixabay.name)
+                return
+            }
             arrayItems.forEach { dictionary in
                 newSection.append(PixabayImageInfo(dict: dictionary))
             }
+            self.changeSectionValue(provider: provider, name: Pixabay.name, newSection: newSection)
             
         default:
             break
         }
-        return newSection
+    }
+    
+    func removeSection(provider: Provider, name: String) {
+        if let index = self.sectionDataSourceStored.firstIndex(where: { $0.provider.name == name }) {
+            self.sectionDataSourceStored.remove(at: index)
+        }
+    }
+    
+    func changeSectionValue(provider: Provider, name: String, newSection: [ImageProtocol]) {
+        if let index = self.sectionDataSourceStored.firstIndex(where: { $0.provider.name == name }) {
+            self.sectionDataSourceStored[index] = Sections(provider: provider, dataSource: newSection)
+        } else {
+            self.sectionDataSourceStored.append(Sections(provider: provider, dataSource: newSection))
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -125,7 +141,6 @@ class ImagesViewController: UIViewController {
         filterVC.selectedFilterType = self.selectedFilter
         filterVC.delegate = self
         filterVC.filterDelegate = self
-        
     }
 }
 
@@ -136,8 +151,7 @@ extension ImagesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let displaySections = self.sectionDataSource.filter { $0.provider.isOn }
-        return displaySections[section].provider.name
+        return self.sectionDataSource.filter { $0.provider.isOn }[section].provider.name
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -194,16 +208,15 @@ extension ImagesViewController: UISearchBarDelegate {
             DispatchQueue.main.async(execute: uiLoaderWork)
             let providerGroup = DispatchGroup()
             
-            for (index, section) in self.sectionDataSource.enumerated() {
-                let parameters = self.updateParameter(with: text, section.provider.parameters)
+            for providerInstance in self.providersArray {
+                let parameters = self.updateParameter(with: text, providerInstance.parameters)
                 providerGroup.enter()
-                NetworkManager.shared.request(urlString: section.provider.url, headers: section.provider.headers,
-                                              parameters: parameters) { [section] dictionary in
+                NetworkManager.shared.request(urlString: providerInstance.url, headers: providerInstance.headers,
+                                              parameters: parameters) { dictionary in
                     self.concurrentQueue.sync(flags: .barrier) {
-                        self.sectionDataSourceStored[index].dataSource =
-                            self.updateSection(provider: section.provider, dictionary: dictionary)
-                        providerGroup.leave()
+                    self.updateSection(provider: providerInstance, dictionary: dictionary)
                     }
+                    providerGroup.leave()
                 }
             }
 

@@ -110,11 +110,8 @@ extension FilterViewController: SwitchProtocol {
     func updateSwitches(provider: Provider, isOn: Bool) -> Bool {
         guard let providersArray = self.providers else { return true }
         
-        var numOfSwitchesOn = 0
-        providersArray.forEach { providerInstance in
-            if providerInstance.isOn { numOfSwitchesOn += 1 }
-        }
-        if (!isOn) && (numOfSwitchesOn < 2) {
+        let numOfSwitchesOn = providersArray.filter { $0.isOn }.count
+        if !isOn && numOfSwitchesOn < 2 {
             self.showAlert()
             return false
         }

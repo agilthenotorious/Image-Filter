@@ -96,6 +96,7 @@ class NetworkManager {
         DispatchQueue.global().async {
             if let url = URL(string: imageUrl),
                 let image = CIImage(contentsOf: url) {
+                self.cache.setObject(image, forKey: cacheKey)
                 completed(image)
                 return
             } else {
