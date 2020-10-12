@@ -22,8 +22,8 @@ class FilterViewController: UIViewController {
     var selectedFilterType: ImageFilterType?
     var sections: [String] = ["Providers", "Filters"]
     
-    weak var delegate: ProviderProtocol?
-    weak var filterDelegate: FilterProtocol?
+    weak var delegate: ProviderDelegate?
+    weak var filterDelegate: FilterDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +105,7 @@ extension FilterViewController: UITableViewDelegate {
     }
 }
 
-extension FilterViewController: SwitchProtocol {
+extension FilterViewController: SwitchDelegate {
     
     func updateSwitches(provider: Provider, isOn: Bool) -> Bool {
         guard let providersArray = self.providers else { return true }

@@ -9,14 +9,15 @@ import UIKit
 
 class ProviderTableViewCell: UITableViewCell {
 
+    static let identifier = "ProviderTableViewCell"
+    
     @IBOutlet weak var switchButton: UISwitch!
     @IBOutlet weak var providerNameLabel: UILabel!
     
-    static let identifier = "ProviderTableViewCell"
     var cellProvider: Provider?
     
-    weak var providerDelegate: ProviderProtocol?
-    weak var switchDelegate: SwitchProtocol?
+    weak var providerDelegate: ProviderDelegate?
+    weak var switchDelegate: SwitchDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()

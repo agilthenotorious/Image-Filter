@@ -9,9 +9,9 @@ import UIKit
 
 class ImageFilterTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var filterTypeLabel: UILabel!
-    
     static let identifier = "ImageFilterTableViewCell"
+    
+    @IBOutlet weak var filterTypeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

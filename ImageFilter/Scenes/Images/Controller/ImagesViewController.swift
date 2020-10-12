@@ -172,7 +172,7 @@ extension ImagesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension ImagesViewController: ProviderProtocol {
+extension ImagesViewController: ProviderDelegate {
     
     func updateProviders(provider: Provider, isOn: Bool) {
         for (index, section) in self.sectionDataSource.enumerated() where section.provider == provider {
@@ -182,7 +182,7 @@ extension ImagesViewController: ProviderProtocol {
     }
 }
 
-extension ImagesViewController: FilterProtocol {
+extension ImagesViewController: FilterDelegate {
     
     func updateFilters(with filter: ImageFilterType) {
         self.selectedFilter = filter

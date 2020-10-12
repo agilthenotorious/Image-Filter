@@ -9,9 +9,9 @@ import UIKit
 
 class ImagesTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var cellImageView: UIImageView!
-    
     static let identifier = "ImagesTableViewCell"
+    
+    @IBOutlet weak var cellImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
