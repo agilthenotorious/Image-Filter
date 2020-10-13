@@ -37,7 +37,9 @@ struct PexelsImageInfo: ImageProtocol {
     //}
     
     init(dict: [String: Any]) {
-        self.imageUrl = dict["medium"] as? String
+        if let srcDict = dict["src"] as? [String: Any] {
+            self.imageUrl = srcDict["medium"] as? String
+        }
     }
 }
 

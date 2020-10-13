@@ -109,15 +109,16 @@ extension FilterViewController: SwitchDelegate {
     
     func updateSwitches(provider: Provider, isOn: Bool) -> Bool {
         guard let providersArray = self.providers else { return true }
-        
         let numOfSwitchesOn = providersArray.filter { $0.isOn }.count
+        
         if !isOn && numOfSwitchesOn < 2 {
             self.showAlert()
             return false
-        }
-        for (index, providerInstance) in providersArray.enumerated() where providerInstance == provider {
-            self.providers?[index].isOn = isOn
-        }
+        } else {
+            for (index, providerInstance) in providersArray.enumerated() where providerInstance.name == provider.name {
+                self.providers?[index].isOn = isOn
+            }
         return true
+        }
     }
 }

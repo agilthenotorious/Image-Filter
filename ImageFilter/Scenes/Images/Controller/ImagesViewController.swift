@@ -9,7 +9,12 @@ import UIKit
 
 class ImagesViewController: UIViewController {
 
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar! {
+        didSet {
+            self.searchBar.delegate = self
+            self.searchBar.enablesReturnKeyAutomatically = true
+        }
+    }
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             self.tableView.delegate = self
@@ -51,8 +56,6 @@ class ImagesViewController: UIViewController {
         self.tableView.isHidden = true
         self.activityIndicator.isHidden = true
         self.warningLabel.isHidden = false
-        
-        self.searchBar.delegate = self
         self.tableView.reloadData()
     }
     
@@ -213,16 +216,15 @@ extension ImagesViewController: UISearchBarDelegate {
                 providerGroup.enter()
                 NetworkManager.shared.request(urlString: providerInstance.url, headers: providerInstance.headers,
                                               parameters: parameters) { dictionary in
-                    self.concurrentQueue.sync(flags: .barrier) {
+                    //self.concurrentQueue.sync(flags: .barrier) {
                     self.updateSection(provider: providerInstance, dictionary: dictionary)
-                    }
+                    //}
                     providerGroup.leave()
                 }
             }
 
             providerGroup.notify(queue: DispatchQueue.main) {
                 self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
                 
                 if self.sectionDataSource.isEmpty {
                     self.warningLabel.isHidden = false

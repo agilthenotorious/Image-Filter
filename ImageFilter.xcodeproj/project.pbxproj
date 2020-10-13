@@ -91,6 +91,7 @@
 			children = (
 				0036C101252A4900005B2693 /* Protocols.swift */,
 				00120B3E252D9C9A00C67DEB /* ImageFilterType.swift */,
+				00120B45252DB82800C67DEB /* CIFilterType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,7 +184,6 @@
 				004D8FFC252C351000EA402A /* Sections.swift */,
 				004D8FFF252C38A400EA402A /* NetworkManager.swift */,
 				004D9002252C5BCA00EA402A /* ApiRequestType.swift */,
-				00120B45252DB82800C67DEB /* CIFilterType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
